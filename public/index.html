@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>CYBER PULSE // Retro Arcade</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="game-container">
+    <!-- Heads Up Display (HUD) -->
+    <header id="hud">
+      <div class="hud-item score-box">
+        <span class="label">SCORE</span>
+        <span id="score-display" class="value glow-cyan">0</span>
+      </div>
+      <div class="hud-item combo-box">
+        <span class="label">COMBO</span>
+        <span id="combo-display" class="value glow-pink">x1</span>
+      </div>
+      <div class="hud-item shield-box">
+        <span class="label">SHIELDS</span>
+        <div class="bar-container">
+          <div id="shield-bar" class="bar-fill"></div>
+        </div>
+      </div>
+      <div class="hud-item wave-box">
+        <span class="label">WAVE</span>
+        <span id="wave-display" class="value glow-yellow">1</span>
+      </div>
+      <div class="hud-actions">
+        <button id="btn-sound" class="btn-icon" title="Toggle Audio">🔊</button>
+        <button id="btn-leaderboard" class="btn-icon" title="Leaderboard">🏆</button>
+      </div>
+    </header>
+
+    <!-- Canvas viewport -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Overlay Screens -->
+    <!-- Start Screen -->
+    <div id="start-screen" class="overlay-screen active">
+      <div class="screen-card">
+        <h1 class="glitch-title" data-text="CYBER PULSE">CYBER PULSE</h1>
+        <p class="subtitle">NEON ARCADE PROTOCOL // v1.0</p>
+        <div class="instruction-box">
+          <div class="control-row"><span>🎮 MOVE</span><strong>WASD / Arrow Keys</strong></div>
+          <div class="control-row"><span>⚡ FIRE</span><strong>Spacebar / Click</strong></div>
+          <div class="control-row"><span>🚀 BOOST</span><strong>Shift Key</strong></div>
+          <div class="control-row"><span>📱 MOBILE</span><strong>On-screen touch controls</strong></div>
+        </div>
+        <button id="btn-start" class="btn-neon-action">ENGAGE PROTOCOL</button>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="overlay-screen">
+      <div class="screen-card">
+        <h2 class="title-defeat glow-red">SYSTEM CRITICAL</h2>
+        <p class="summary-text">Your ship was overwhelmed in Wave <span id="final-wave">1</span></p>
+        <div class="final-stats">
+          <div class="stat-pill">
+            <span class="label">FINAL SCORE</span>
+            <span id="final-score" class="val glow-cyan">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="label">ACCURACY</span>
+            <span id="final-accuracy" class="val glow-pink">0%</span>
+          </div>
+        </div>
+
+        <form id="save-score-form">
+          <label for="player-input">PILOT CALLSIGN:</label>
+          <div class="input-group">
+            <input type="text" id="player-input" maxlength="15" placeholder="PILOT_01" required autocomplete="off">
+            <button type="submit" id="btn-submit-score" class="btn-neon-small">TRANSMIT</button>
+          </div>
+        </form>
+
+        <button id="btn-restart" class="btn-neon-action">REBOOT SYSTEM</button>
+      </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboard-modal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>GLOBAL MAINFRAME RANKINGS</h3>
+          <button id="btn-close-modal" class="btn-close">×</button>
+        </div>
+        <div class="leaderboard-body">
+          <table class="ranking-table">
+            <thead>
+              <tr>
+                <th>RANK</th>
+                <th>PILOT</th>
+                <th>WAVE</th>
+                <th>SCORE</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-rows">
+              <tr><td colspan="4" class="loading-cell">Connecting to mainframe...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Virtual Controls -->
+    <div id="mobile-controls" class="mobile-only">
+      <div id="touch-dpad">
+        <div class="dpad-axis">
+          <button class="dpad-btn" data-dir="up">▲</button>
+          <div class="dpad-row">
+            <button class="dpad-btn" data-dir="left">◀</button>
+            <button class="dpad-btn" data-dir="right">▶</button>
+          </div>
+          <button class="dpad-btn" data-dir="down">▼</button>
+        </div>
+      </div>
+      <button id="touch-fire" class="fire-btn">FIRE</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
